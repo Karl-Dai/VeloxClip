@@ -27,7 +27,7 @@ internal static class Program
             return 0;
         }
 
-        Application.Start(_ =>
+        Application.Start(p =>
         {
             var context = new DispatcherQueueSynchronizationContext(
                 DispatcherQueue.GetForCurrentThread());
