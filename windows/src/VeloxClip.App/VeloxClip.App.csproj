@@ -17,7 +17,9 @@
     <SelfContained>true</SelfContained>
     <PublishReadyToRun>false</PublishReadyToRun>
     <Nullable>enable</Nullable>
-    <DISABLE_XAML_GENERATED_MAIN>true</DISABLE_XAML_GENERATED_MAIN>
+    <!-- The XAML generator wraps its auto Program/Main in `#if !DISABLE_XAML_GENERATED_MAIN`.
+         Define the constant (not a property) so our Program.cs is the only entry point. -->
+    <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" />

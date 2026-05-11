@@ -25,6 +25,7 @@ public class AppEnvironmentBootstrapperTests : IDisposable
         {
             Directory.Delete(_tempBase, recursive: true);
         }
+        GC.SuppressFinalize(this);
     }
 
     [Fact]

@@ -5,6 +5,9 @@
     <AssemblyName>VeloxClip.Core.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- xUnit convention: test method names use Method_State_Expectation underscores.
+         Suppress CA1707 (underscore naming) and CA1062 (null guards) for test code. -->
+    <NoWarn>$(NoWarn);CA1707;CA1062</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
