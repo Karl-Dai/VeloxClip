@@ -17,6 +17,9 @@ Package.resolved
 # Compiled binaries
 *.app/
 VeloxClip.app/
+# The Windows project directory (case-insensitive `VeloxClip.App/`)
+# would otherwise get caught by `*.app/` on macOS — exclude it.
+!windows/src/VeloxClip.App/
 VeloxClip.dmg
 VeloxClip-v*.dmg
 
@@ -55,3 +58,20 @@ VeloxClip.iconset/
 icon.png
 VeloxClip/Resources/AppIcon.icns.backup
 *.icns.backup
+
+# .NET / Visual Studio (Windows port)
+windows/**/bin/
+windows/**/obj/
+windows/**/.vs/
+windows/**/*.user
+windows/**/*.suo
+windows/**/TestResults/
+windows/**/Generated Files/
+windows/**/AppPackages/
+windows/**/BundleArtifacts/
+windows/**/*.appx
+windows/**/*.appxbundle
+windows/**/*.msix
+windows/**/*.msixbundle
+windows/**/PublishProfiles/local/
+windows/dist/
