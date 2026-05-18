@@ -69,6 +69,12 @@ public class ClipboardSchemaTests : IDisposable
         using var conn2 = OpenRaw();
         Action act = () => ClipboardSchema.EnsureCreated(conn2);
         act.Should().NotThrow();
+
+        // The schema must still be intact after the second (idempotent) call.
+        ScalarText(conn2, "SELECT name FROM sqlite_master WHERE type='table' AND name='clipboard_entries';")
+            .Should().Be("clipboard_entries");
+        ScalarText(conn2, "SELECT name FROM sqlite_master WHERE type='table' AND name='app_settings';")
+            .Should().Be("app_settings");
     }
 
     private static string? ScalarText(SqliteConnection conn, string sql)
