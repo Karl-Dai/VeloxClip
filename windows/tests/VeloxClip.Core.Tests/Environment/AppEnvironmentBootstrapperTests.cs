@@ -37,6 +37,7 @@ public class AppEnvironmentBootstrapperTests : IDisposable
         Directory.Exists(_paths.Database).Should().BeTrue();
         Directory.Exists(_paths.Cache).Should().BeTrue();
         Directory.Exists(_paths.Logs).Should().BeTrue();
+        Directory.Exists(_paths.Blobs).Should().BeTrue();
     }
 
     [Fact]
