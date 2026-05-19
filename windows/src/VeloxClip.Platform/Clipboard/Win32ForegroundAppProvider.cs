@@ -9,13 +9,15 @@ namespace VeloxClip.Platform.Clipboard;
 /// Win32 <see cref="IForegroundAppProvider"/>: resolves the foreground window's
 /// owning process name.
 /// </summary>
-public sealed partial class Win32ForegroundAppProvider : IForegroundAppProvider
+public sealed class Win32ForegroundAppProvider : IForegroundAppProvider
 {
-    [LibraryImport("user32.dll")]
-    private static partial IntPtr GetForegroundWindow();
+    // Classic [DllImport] (not [LibraryImport]) keeps this consistent with the
+    // other Win32 wrappers and avoids requiring <AllowUnsafeBlocks>.
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
 
-    [LibraryImport("user32.dll")]
-    private static partial uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 
     public string? GetForegroundProcessName()
     {
