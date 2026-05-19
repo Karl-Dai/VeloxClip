@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 
 namespace VeloxClip.Core.Capture;
@@ -17,6 +18,8 @@ public static partial class ColorDetector
     /// <summary>True if <paramref name="text"/> (after trimming) is a color literal.</summary>
     public static bool IsColor(string text)
     {
+        ArgumentNullException.ThrowIfNull(text);
+
         var trimmed = text.Trim();
         return HexRegex().IsMatch(trimmed) || RgbRegex().IsMatch(trimmed);
     }

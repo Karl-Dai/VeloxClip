@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Microsoft.Data.Sqlite;
 
 namespace VeloxClip.Core.Persistence;
@@ -42,7 +43,7 @@ public static class ClipboardSchema
         using (var read = openConnection.CreateCommand())
         {
             read.CommandText = "PRAGMA user_version;";
-            version = Convert.ToInt64(read.ExecuteScalar());
+            version = Convert.ToInt64(read.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         if (version >= CurrentVersion)

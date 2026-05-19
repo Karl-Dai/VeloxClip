@@ -9,9 +9,11 @@
     <WarningsNotAsErrors>NU1903</WarningsNotAsErrors>
     <!-- CA1848 (use LoggerMessage delegates) is a hot-path micro-optimisation;
          VeloxClip's logging is all low-frequency lifecycle/per-capture events,
-         so the source-generated-delegate boilerplate is not worth it. Silenced
-         repo-wide. -->
-    <NoWarn>$(NoWarn);CA1848</NoWarn>
+         so the source-generated-delegate boilerplate is not worth it.
+         CA1716 (don't name members with reserved keywords, e.g. Stop) only
+         matters for cross-language consumers (VB); VeloxClip is C#-only, so
+         natural names like Start/Stop are kept. Both silenced repo-wide. -->
+    <NoWarn>$(NoWarn);CA1848;CA1716</NoWarn>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <NeutralLanguage>en-US</NeutralLanguage>

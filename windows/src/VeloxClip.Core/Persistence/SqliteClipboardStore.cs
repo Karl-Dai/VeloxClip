@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Data.Sqlite;
 using VeloxClip.Core.Abstractions;
 using VeloxClip.Core.Models;
@@ -145,7 +146,7 @@ public sealed class SqliteClipboardStore : IClipboardStore
         {
             count.Transaction = tx;
             count.CommandText = "SELECT COUNT(*) FROM clipboard_entries;";
-            total = Convert.ToInt64(count.ExecuteScalar());
+            total = Convert.ToInt64(count.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         if (total <= historyLimit)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
@@ -55,7 +56,8 @@ public class ClipboardSchemaTests : IDisposable
 
         using var pragma = check.CreateCommand();
         pragma.CommandText = "PRAGMA user_version;";
-        Convert.ToInt32(pragma.ExecuteScalar()).Should().Be(ClipboardSchema.CurrentVersion);
+        Convert.ToInt32(pragma.ExecuteScalar(), CultureInfo.InvariantCulture)
+            .Should().Be(ClipboardSchema.CurrentVersion);
     }
 
     [Fact]
