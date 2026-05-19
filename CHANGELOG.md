@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - **Windows port — P0 scaffold**: `windows/` project skeleton (Core / Platform / App), WinUI 3 placeholder window, system tray, single-instance via AppInstance, Serilog file logging, `%LOCALAPPDATA%\VeloxClip\` scaffold, and GitHub Actions workflow producing unsigned MSIX + portable zip on tags.
+- **Windows port — P1 clipboard core**: background clipboard monitor (Win32 format listener) capturing text / RTF / image / file / color, SQLite persistence (`clipboard_entries` + `app_settings`), external PNG blob store with a 16 MB cap, two-tier deduplication, source-app tracking, a configurable history limit (default 100), a hardcoded password-manager blacklist, and startup orphan-blob reconciliation. No user-facing UI yet.
 
 ## [1.1.17] - 2026-05-07
 
