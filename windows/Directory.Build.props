@@ -7,6 +7,11 @@
     <!-- NU1903 = transitive vulnerability advisory. Carved out so disclosure-window
          CVE alerts don't block local builds; CI/GHAS surfaces them separately. -->
     <WarningsNotAsErrors>NU1903</WarningsNotAsErrors>
+    <!-- CA1848 (use LoggerMessage delegates) is a hot-path micro-optimisation;
+         VeloxClip's logging is all low-frequency lifecycle/per-capture events,
+         so the source-generated-delegate boilerplate is not worth it. Silenced
+         repo-wide. -->
+    <NoWarn>$(NoWarn);CA1848</NoWarn>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <NeutralLanguage>en-US</NeutralLanguage>

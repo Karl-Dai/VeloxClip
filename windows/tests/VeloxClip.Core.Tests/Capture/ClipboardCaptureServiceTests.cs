@@ -122,6 +122,18 @@ public class ClipboardCaptureServiceTests
         harness.BlobStore.Deleted.Should().ContainSingle();
     }
 
+    [Fact]
+    public void Capture_NeverThrows_WhenADependencyFails()
+    {
+        var harness = new Harness { Capture = new ClipboardCapture(ClipboardKind.Text, "boom", null) };
+        // The store throws mid-pipeline; Capture() must swallow it and not rethrow.
+        harness.Store.NextAddResult = _ => throw new InvalidOperationException("simulated store failure");
+
+        var capture = () => harness.Service.Capture();
+
+        capture.Should().NotThrow();
+    }
+
     // ---- test harness ----
 
     private sealed class Harness
