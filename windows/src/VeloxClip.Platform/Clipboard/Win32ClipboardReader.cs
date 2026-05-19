@@ -169,9 +169,9 @@ public sealed class Win32ClipboardReader : IClipboardReader
         for (uint i = 0; i < count; i++)
         {
             var length = DragQueryFileW(handle, i, null, 0);
-            var buffer = new StringBuilder((int)length + 1);
-            DragQueryFileW(handle, i, buffer, (uint)buffer.Capacity);
-            paths[i] = buffer.ToString();
+            var buffer = new char[length + 1];
+            var copied = DragQueryFileW(handle, i, buffer, (uint)buffer.Length);
+            paths[i] = new string(buffer, 0, (int)copied);
         }
 
         return string.Join("\n", paths);
@@ -289,7 +289,7 @@ public sealed class Win32ClipboardReader : IClipboardReader
     private static extern uint RegisterClipboardFormatW(string lpszFormat);
 
     [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-    private static extern uint DragQueryFileW(IntPtr hDrop, uint iFile, StringBuilder? lpszFile, uint cch);
+    private static extern uint DragQueryFileW(IntPtr hDrop, uint iFile, char[]? lpszFile, uint cch);
 
     [DllImport("kernel32.dll")]
     private static extern IntPtr GlobalLock(IntPtr hMem);
