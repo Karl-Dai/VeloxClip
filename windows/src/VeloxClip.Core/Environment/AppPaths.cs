@@ -23,6 +23,7 @@ public sealed class AppPaths : IAppPaths
         Database = Path.Combine(Root, "db");
         Cache = Path.Combine(Root, "cache");
         Logs = Path.Combine(Root, "logs");
+        Blobs = Path.Combine(Root, "blobs");
         SettingsFile = Path.Combine(Root, "settings.json");
     }
 
@@ -30,6 +31,7 @@ public sealed class AppPaths : IAppPaths
     public string Database { get; }
     public string Cache { get; }
     public string Logs { get; }
+    public string Blobs { get; }
     public string SettingsFile { get; }
 
     /// <summary>Default instance rooted at <c>%LOCALAPPDATA%\VeloxClip</c>.</summary>

@@ -18,6 +18,9 @@ public interface IAppPaths
     /// <summary>Directory for rolling log files.</summary>
     string Logs { get; }
 
+    /// <summary>Directory holding externally-stored clipboard image blobs.</summary>
+    string Blobs { get; }
+
     /// <summary>Absolute path to the user's settings.json.</summary>
     string SettingsFile { get; }
 }

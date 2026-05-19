@@ -6,8 +6,9 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <!-- xUnit convention: test method names use Method_State_Expectation underscores.
-         Suppress CA1707 (underscore naming) and CA1062 (null guards) for test code. -->
-    <NoWarn>$(NoWarn);CA1707;CA1062</NoWarn>
+         CA1707 (underscore naming), CA1062 (null guards) and CA1861 (hoist
+         constant array args to static fields) are all noise for test code. -->
+    <NoWarn>$(NoWarn);CA1707;CA1062;CA1861</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -15,6 +16,7 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\VeloxClip.Core\VeloxClip.Core.csproj" />
