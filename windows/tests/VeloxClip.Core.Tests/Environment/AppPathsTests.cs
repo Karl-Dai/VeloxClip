@@ -25,6 +25,7 @@ public class AppPathsTests
         paths.Database.Should().Be(Path.Combine(paths.Root, "db"));
         paths.Cache.Should().Be(Path.Combine(paths.Root, "cache"));
         paths.Logs.Should().Be(Path.Combine(paths.Root, "logs"));
+        paths.Blobs.Should().Be(Path.Combine(paths.Root, "blobs"));
         paths.SettingsFile.Should().Be(Path.Combine(paths.Root, "settings.json"));
     }
 

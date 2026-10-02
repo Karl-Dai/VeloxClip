@@ -18,6 +18,7 @@ public static class AppEnvironmentBootstrapper
         Directory.CreateDirectory(paths.Database);
         Directory.CreateDirectory(paths.Cache);
         Directory.CreateDirectory(paths.Logs);
+        Directory.CreateDirectory(paths.Blobs);
 
         if (!File.Exists(paths.SettingsFile))
         {

@@ -9,6 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - **Windows port — P0 scaffold**: `windows/` project skeleton (Core / Platform / App), WinUI 3 placeholder window, system tray, single-instance via AppInstance, Serilog file logging, `%LOCALAPPDATA%\VeloxClip\` scaffold, and GitHub Actions workflow producing unsigned MSIX + portable zip on tags.
+- **Windows port — P1 clipboard core**: background clipboard monitor (Win32 format listener) capturing text / RTF / image / file / color, SQLite persistence (`clipboard_entries` + `app_settings`), external PNG blob store with a 16 MB cap, two-tier deduplication, source-app tracking, a configurable history limit (default 100), a hardcoded password-manager blacklist, and startup orphan-blob reconciliation. No user-facing UI yet.
+
+### Fixed 修复
+
+- Windows 剪贴板 DIB 图像的像素偏移包含调色板与颜色掩码，避免索引色、RGB565 等图片读取错误 / Windows DIB conversion accounts for palettes and color masks when locating pixels.
+- 剪贴板采集按顺序运行，退出时等待已排队采集完成，避免并发写入和退出后继续访问数据库 / Clipboard captures run serially and shutdown drains queued work before returning.
+- 新增 12 项平台无关回归用例，核心测试总计 86 项通过 / Add 12 platform-independent regression cases; all 86 core tests pass.
 
 ## [1.1.17] - 2026-05-07
 
