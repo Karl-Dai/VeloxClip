@@ -24,6 +24,8 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    # Forks do not inherit the upstream Pages site. Enable only by explicit opt-in.
+    if: github.event.repository.fork == false || vars.ENABLE_PAGES == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
