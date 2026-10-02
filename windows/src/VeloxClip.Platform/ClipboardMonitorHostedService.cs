@@ -16,6 +16,10 @@ namespace VeloxClip.Platform;
 /// </summary>
 public sealed class ClipboardMonitorHostedService : IHostedService
 {
+    private readonly object _captureGate = new();
+    private Task _pendingCapture = Task.CompletedTask;
+    private bool _running;
+
     private readonly IClipboardChangeSource _changeSource;
     private readonly ClipboardCaptureService _captureService;
     private readonly OrphanBlobReconciler _reconciler;
@@ -44,20 +48,46 @@ public sealed class ClipboardMonitorHostedService : IHostedService
             _logger.LogError(ex, "Orphan-blob reconciliation failed at startup.");
         }
 
+        lock (_captureGate)
+        {
+            _running = true;
+        }
+
         _changeSource.ClipboardChanged += OnClipboardChanged;
         _changeSource.Start();
         _logger.LogInformation("Clipboard monitor started.");
         return Task.CompletedTask;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public async Task StopAsync(CancellationToken cancellationToken)
     {
+        Task pending;
+        lock (_captureGate)
+        {
+            _running = false;
+            pending = _pendingCapture;
+        }
+
         _changeSource.ClipboardChanged -= OnClipboardChanged;
         _changeSource.Stop();
+        await pending.WaitAsync(cancellationToken).ConfigureAwait(false);
         _logger.LogInformation("Clipboard monitor stopped.");
-        return Task.CompletedTask;
     }
 
     private void OnClipboardChanged(object? sender, EventArgs e)
-        => Task.Run(_captureService.Capture);
+    {
+        lock (_captureGate)
+        {
+            if (!_running)
+            {
+                return;
+            }
+
+            // Each read/dedup/write pipeline finishes before the next one starts.
+            // Track the chain so shutdown cannot race unfinished database writes.
+            _pendingCapture = _pendingCapture.ContinueWith(
+                _ => _captureService.Capture(), CancellationToken.None,
+                TaskContinuationOptions.None, TaskScheduler.Default);
+        }
+    }
 }

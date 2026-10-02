@@ -248,18 +248,7 @@ public sealed class Win32ClipboardReader : IClipboardReader
 
     private static byte[] DibToPng(byte[] dib)
     {
-        // A CF_DIB is a .bmp file missing its 14-byte BITMAPFILEHEADER.
-        // The pixel data offset = 14 + the DIB header size (first 4 LE bytes of the DIB).
-        const int fileHeaderSize = 14;
-        var dibHeaderSize = BitConverter.ToInt32(dib, 0);
-        var pixelOffset = fileHeaderSize + dibHeaderSize;
-
-        var bmp = new byte[fileHeaderSize + dib.Length];
-        bmp[0] = (byte)'B';
-        bmp[1] = (byte)'M';
-        BitConverter.GetBytes(bmp.Length).CopyTo(bmp, 2);   // total file size
-        BitConverter.GetBytes(pixelOffset).CopyTo(bmp, 10); // offset to pixel data
-        dib.CopyTo(bmp, fileHeaderSize);
+        var bmp = DibBitmap.ToBitmapFile(dib);
 
         using var bmpStream = new MemoryStream(bmp);
         using var bitmap = new Bitmap(bmpStream);

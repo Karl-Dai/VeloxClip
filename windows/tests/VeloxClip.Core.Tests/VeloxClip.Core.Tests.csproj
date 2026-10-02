@@ -17,8 +17,14 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\VeloxClip.Core\VeloxClip.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Exercise platform-independent monitor lifecycle without loading Win32. -->
+    <Compile Include="../../src/VeloxClip.Platform/ClipboardMonitorHostedService.cs" Link="Platform/ClipboardMonitorHostedService.cs" />
+    <Compile Include="../../src/VeloxClip.Platform/Clipboard/DibBitmap.cs" Link="Platform/DibBitmap.cs" />
   </ItemGroup>
 </Project>
